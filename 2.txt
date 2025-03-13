@@ -1,0 +1,37 @@
+
+sudo dnf install -y httpd vsftpd openssh-server
+
+Habilitar y arrancar los servicios
+
+sudo systemctl enable --now httpd
+sudo systemctl enable --now vsftpd
+sudo systemctl enable --now sshd
+
+sudo iptables -A INPUT -p tcp --dport 80 -j DROP
+sudo iptables -A INPUT -p tcp --dport 21 -j DROP
+sudo iptables -A INPUT -p tcp --dport 22 -j DROP
+
+sudo iptables -L -n
+
+sudo iptables -D INPUT -p tcp --dport 80 -j DROP
+sudo iptables -D INPUT -p tcp --dport 21 -j DROP
+sudo iptables -D INPUT -p tcp --dport 22 -j DROP
+
+sudo iptables -L -n
+
+sudo firewall-cmd --permanent --zone=FedoraWorkstation --remove-service=http
+sudo firewall-cmd --permanent --zone=FedoraWorkstation --remove-service=ftp
+sudo firewall-cmd --permanent --zone=FedoraWorkstation --remove-service=ssh
+
+sudo firewall-cmd --reload
+
+sudo firewall-cmd --zone=FedoraWorkstation --list-services
+
+
+sudo firewall-cmd --permanent --zone=FedoraWorkstation --add-service=http
+sudo firewall-cmd --permanent --zone=FedoraWorkstation --add-service=ftp
+sudo firewall-cmd --permanent --zone=FedoraWorkstation --add-service=ssh
+
+sudo firewall-cmd --reload
+
+sudo firewall-cmd --zone=FedoraWorkstation --list-services

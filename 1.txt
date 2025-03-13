@@ -1,0 +1,17 @@
+
+
+sudo dnf install -y gnupg2
+
+
+gpg2 --full-generate-key
+
+
+mkdir practica
+cd practica
+nano cifrado
+
+Cifrar el archivo con GPG2
+
+gpg2 -c archivo.txt
+
+gpg2 -d archivo.txt.gpg > archivo.txt
